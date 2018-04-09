@@ -1,31 +1,4 @@
 " ~/.vimrc (configuration file for vim only)
-" skeletons
-function! SKEL_spec()
-	0r /usr/share/vim/current/skeletons/skeleton.spec
-	language time en_US
-	let login = system('whoami')
-	if v:shell_error
-	   let login = 'unknown'
-	else
-	   let newline = stridx(login, "\n")
-	   if newline != -1
-		let login = strpart(login, 0, newline)
-	   endif
-	endif
-	let hostname = system('hostname -f')
-	if v:shell_error
-	    let hostname = 'localhost'
-	else
-	    let newline = stridx(hostname, "\n")
-	    if newline != -1
-		let hostname = strpart(hostname, 0, newline)
-	    endif
-	endif
-	exe "%s/specRPM_CREATION_DATE/" . strftime("%a\ %b\ %d\ %Y") . "/ge"
-	exe "%s/specRPM_CREATION_AUTHOR_MAIL/" . login . "@" . hostname . "/ge"
-	exe "%s/specRPM_CREATION_NAME/" . expand("%:t:r") . "/ge"
-endfunction
-autocmd BufNewFile	*.spec	call SKEL_spec()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle Setup
@@ -40,8 +13,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" YouCompleteMe
-Plugin 'Valloric/YouCompleteMe'
+" YouCompleteMe - Needs a newer VIM
+" Plugin 'Valloric/YouCompleteMe'
 
 " vim-fugitive (cool git stuff)
 Plugin 'tpope/vim-fugitive'
@@ -55,8 +28,11 @@ Plugin 'airblade/vim-gitgutter'
 " a.vim - Switch between Source and Header files
 Plugin 'vim-scripts/a.vim'
 
-" Solarized Color Scheme
-Plugin 'altercation/vim-colors-solarized'
+" Color Schemes
+Plugin 'flazz/vim-colorschemes'
+
+" Syntax Files
+Plugin 'sheerun/vim-polyglot'
 
 " Tmuxline
 " Bundle 'edkolev/tmuxline.vim'
@@ -71,7 +47,7 @@ filetype plugin indent on    " required
 " Enable syntax highlighting
 syntax enable
 set t_Co=256
-colorscheme ron
+colorscheme dracula
 
 " associate *.sqli with sql filetype
 au BufRead,BufNewFile *.sqli setfiletype sql
